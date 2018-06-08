@@ -8,13 +8,28 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.caelum.financas.dao.ContaDao;
+import br.com.caelum.financas.dao.GerenteDao;
 import br.com.caelum.financas.modelo.Conta;
+import br.com.caelum.financas.modelo.Gerente;
 
 @Named
 @ViewScoped
 public class ContasBean implements Serializable {
+	
+	@Inject
+	private GerenteDao gerenteDao;
+	
+	private Integer gerenteId;
     
-    private static final long serialVersionUID = 1L;
+    public Integer getGerenteId() {
+		return gerenteId;
+	}
+
+	public void setGerenteId(Integer gerenteId) {
+		this.gerenteId = gerenteId;
+	}
+
+	private static final long serialVersionUID = 1L;
 
 	private Conta conta = new Conta();
 	private List<Conta> contas;
@@ -32,6 +47,10 @@ public class ContasBean implements Serializable {
 
 	public void grava() {
 		System.out.println("Gravando a conta");
+		if(gerenteId != null){
+			Gerente gerenteRelacionado = gerenteDao.busca(gerenteId);
+			this.conta.setGerente(gerenteRelacionado);
+		}
 		if (this.conta.getId() == null) {
 		dao.adiciona(conta);
 		} else {
@@ -62,5 +81,6 @@ public class ContasBean implements Serializable {
 	 */
 	private void limpaFormularioDoJSF() {
 		this.conta = new Conta();
+		gerenteId = null;
 	}
 }

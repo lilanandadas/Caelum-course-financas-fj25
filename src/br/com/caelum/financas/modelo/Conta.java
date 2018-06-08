@@ -9,7 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -44,6 +46,10 @@ public class Conta {
 	@OneToMany(mappedBy = "conta")
 	private List<Movimentacao> movimentacoes = new ArrayList<Movimentacao>();
 	
+	@OneToOne
+	@JoinColumn(unique=true)
+	private Gerente gerente;
+	
 	//@Version
 	//private Integer versao;
 
@@ -54,6 +60,14 @@ public class Conta {
 	//public void setVersao(Integer versao) {
 	//	this.versao = versao;
 	//}
+
+	public Gerente getGerente() {
+		return gerente;
+	}
+
+	public void setGerente(Gerente gerente) {
+		this.gerente = gerente;
+	}
 
 	public List<Movimentacao> getMovimentacoes() {
 		return movimentacoes;

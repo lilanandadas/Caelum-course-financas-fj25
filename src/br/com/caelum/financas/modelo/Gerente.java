@@ -1,5 +1,52 @@
 package br.com.caelum.financas.modelo;
 
-public class Gerente {
+import java.util.List;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Gerente {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;
+	
+	private String nome;
+	
+	@ElementCollection
+	private List<String> telefone;
+	
+	@Embedded
+	private Endereco endereco = new Endereco();
+	
+	
+	public Endereco getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public List<String> getTelefone() {
+		return telefone;
+	}
+	public void setTelefone(List<String> telefone) {
+		this.telefone = telefone;
+	}
+	
 }
